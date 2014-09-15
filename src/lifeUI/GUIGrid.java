@@ -34,6 +34,11 @@ public class GUIGrid implements CommunityPublisher{
 		addCellsToFrame(dimension);
 	}
 
+	private void setUpFrameDefaults() {
+		this.theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.theFrame.setSize(600, 600);
+	}
+	
 	private void addCellsToFrame(int dimension) {
 		JPanel allCellsPanel = new JPanel();
 		allCellsPanel.setLayout(new GridLayout(dimension, dimension));
@@ -48,11 +53,6 @@ public class GUIGrid implements CommunityPublisher{
 			this.allCells.put(c, newCell);
 			allCellsPanel.add(cellPanel);
 		});
-	}
-
-	private void setUpFrameDefaults() {
-		this.theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.theFrame.setSize(600, 600);
 	}
 
 	public void start(int numberOfGenerations) {
