@@ -12,7 +12,7 @@ public class MainTest {
 
 	public static void main(String[] args) {
 
-		int dimension = 100;
+		int dimension = 54;
 		Set<Cell> initialLiveCells = new HashSet<>();
 		Cell.rangeDo(new Cell(1, 1), new Cell(dimension, dimension), (Cell c) -> {
 			if(Math.round((1.62 * 3.14 * Math.random())) % 2 == 0)
