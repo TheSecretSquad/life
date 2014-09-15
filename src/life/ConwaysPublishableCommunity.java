@@ -13,12 +13,12 @@ public class ConwaysPublishableCommunity implements PublishableCommunity {
 	}
 	
 	@Override
-	public void publishTo(CommunityPublisher displayGrid) {
+	public void publishTo(CommunityPublisher communityPublisher) {
 		Cell.rangeDo(new Cell(1, 1), new Cell(size, size), (Cell c) -> {
 				if(this.cells.containsKey(c))
-					displayGrid.alive(c);
+					communityPublisher.alive(c);
 				else
-					displayGrid.dead(c);
+					communityPublisher.dead(c);
 		});
 	}
 }
