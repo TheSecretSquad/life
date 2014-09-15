@@ -1,6 +1,6 @@
 package life;
 
-public interface DisplayGrid {
+public interface CommunityPublisher {
 
 	void alive(final Cell cell);
 	

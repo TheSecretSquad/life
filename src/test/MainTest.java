@@ -6,7 +6,6 @@ import java.util.Set;
 import life.Cell;
 import life.Community;
 import life.ConwaysCommunity;
-import life.Game;
 import lifeUI.GUIGrid;
 
 public class MainTest {
@@ -21,10 +20,8 @@ public class MainTest {
 		});
 
 		Community c = new ConwaysCommunity(dimension, initialLiveCells);
-		GUIGrid grid = new GUIGrid(dimension);
-		grid.setVisible(true);
-		Game game = new Game(c, grid);
+		GUIGrid grid = new GUIGrid(dimension, c);
 		
-		game.start(500);
+		grid.start(10000);
 	}
 }

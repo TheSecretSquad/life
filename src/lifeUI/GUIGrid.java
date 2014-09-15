@@ -1,22 +1,34 @@
 package lifeUI;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import life.Cell;
-import life.DisplayGrid;
+import life.Community;
+import life.CommunityPublisher;
 
-public class GUIGrid extends JFrame implements DisplayGrid{
+public class GUIGrid extends JFrame implements CommunityPublisher{
 
 	private static final long serialVersionUID = -7502210004900623683L;
 	
 	private Map<Cell, GUICell> allCells;
+	private Community community;
+	private final Timer timer;
+	private int numberOfGenerationsRequested;
+	private int currentTicksPassed;
 	
-	public GUIGrid(int dimension) {
+	public GUIGrid(int dimension, Community community) {
+		this.community = community;
+		this.timer = new Timer(100, (ActionEvent e) ->  {
+			GUIGrid.this.nextGeneration();
+			GUIGrid.this.updateTimer();
+		});
 		this.allCells = new HashMap<>();
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(600, 600);
@@ -29,6 +41,24 @@ public class GUIGrid extends JFrame implements DisplayGrid{
 			panel.add(newCell);
 		});
 		this.add(panel);
+	}
+
+	public void start(int numberOfGenerations) {
+		this.numberOfGenerationsRequested = numberOfGenerations;
+		this.setVisible(true);
+		this.timer.start();
+	}
+	
+	private void updateTimer() {
+		this.currentTicksPassed++;
+		if(this.currentTicksPassed >= this.numberOfGenerationsRequested)
+			this.timer.stop();
+	}
+	
+	private void nextGeneration() {
+		this.community.asPublishable().publishTo(this);
+		this.community = this.community.tick();
+		this.updateTimer();
 	}
 
 	@Override
