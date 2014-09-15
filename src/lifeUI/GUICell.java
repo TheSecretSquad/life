@@ -8,7 +8,6 @@ import javax.swing.Timer;
 
 public class GUICell {
 
-	private static final long serialVersionUID = -5427277804823810581L;
 	private static final Color aliveColor = Color.WHITE;
 	private static final Color survivedColor = new Color(227, 217, 78);
 	private static final Color deadColor = Color.BLACK;
