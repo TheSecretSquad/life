@@ -24,7 +24,7 @@ public final class Cell {
 	public Cell up() {
 		return new Cell(this.x, this.y + 1);
 	}
-
+	
 	public Cell down() {
 		return new Cell(this.x, this.y - 1);
 	}
