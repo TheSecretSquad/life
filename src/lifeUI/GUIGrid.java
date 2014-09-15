@@ -13,12 +13,11 @@ import life.Cell;
 import life.Community;
 import life.CommunityPublisher;
 
-public class GUIGrid extends JFrame implements CommunityPublisher{
-
-	private static final long serialVersionUID = -7502210004900623683L;
+public class GUIGrid implements CommunityPublisher{
 	
 	private Map<Cell, GUICell> allCells;
 	private Community community;
+	private JFrame frame;
 	private final Timer timer;
 	private int numberOfGenerationsRequested;
 	private int currentTicksPassed;
@@ -30,22 +29,24 @@ public class GUIGrid extends JFrame implements CommunityPublisher{
 			GUIGrid.this.updateTimer();
 		});
 		this.allCells = new HashMap<>();
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(600, 600);
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(dimension, dimension));
+		this.frame = new JFrame();
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setSize(600, 600);
+		JPanel allCellsPanel = new JPanel();
+		allCellsPanel.setLayout(new GridLayout(dimension, dimension));
 		
 		Cell.rangeDo(new Cell(1, 1), new Cell(dimension, dimension), (Cell c) -> {
-			GUICell newCell = new GUICell(false);
+			JPanel cellPanel = new JPanel();
+			GUICell newCell = new GUICell(false, cellPanel);
 			this.allCells.put(c, newCell);
-			panel.add(newCell);
+			allCellsPanel.add(cellPanel);
 		});
-		this.add(panel);
+		this.frame.add(allCellsPanel);
 	}
 
 	public void start(int numberOfGenerations) {
 		this.numberOfGenerationsRequested = numberOfGenerations;
-		this.setVisible(true);
+		this.frame.setVisible(true);
 		this.timer.start();
 	}
 	
