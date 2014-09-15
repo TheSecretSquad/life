@@ -3,5 +3,5 @@ package life;
 
 public interface PublishableCommunity {
 	
-	void publishTo(CommunityPublisher displayGrid);
+	void publishTo(CommunityPublisher communityPublisher);
 }
