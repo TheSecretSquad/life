@@ -31,19 +31,16 @@ public class GUICell {
 		}
 		
 		this.displayColor(bornColor);
-		Timer t = new Timer(100, e -> this.displayColor(aliveColor));
-		t.setRepeats(false);
-		t.start();
+		this.displayAfterMilliSecTimeOut(aliveColor, 100);
+
 	}
-	
+
 	public void dead() {
 		if(this.isDisplayingColor(deadColor))
 			return;
 		
 		this.displayColor(dyingColor);
-		Timer t = new Timer(100, e -> this.displayColor(deadColor));
-		t.setRepeats(false);
-		t.start();
+		this.displayAfterMilliSecTimeOut(deadColor, 100);
 	}
 
 	private boolean isDisplayingColor(Color color) {
@@ -52,5 +49,11 @@ public class GUICell {
 	
 	private void displayColor(Color color) {
 		this.panel.setBackground(color);
+	}
+	
+	private void displayAfterMilliSecTimeOut(Color color, int milliseconds) {
+		Timer t = new Timer(milliseconds, e -> this.displayColor(color));
+		t.setRepeats(false);
+		t.start();
 	}
 }
