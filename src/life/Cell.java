@@ -1,5 +1,8 @@
 package life;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
@@ -20,22 +23,6 @@ public final class Cell {
 		this.x = x;
 		this.y = y;
 	}
-
-	public Cell up() {
-		return new Cell(this.x, this.y + 1);
-	}
-	
-	public Cell down() {
-		return new Cell(this.x, this.y - 1);
-	}
-
-	public Cell left() {
-		return new Cell(this.x - 1, this.y);
-	}
-
-	public Cell right() {
-		return new Cell(this.x + 1, this.y);
-	}
 	
 	public boolean equalsX(Cell cell) {
 		 return this.x == cell.x;
@@ -43,6 +30,31 @@ public final class Cell {
 	
 	public boolean equalsY(Cell cell) {
 		 return this.y == cell.y;
+	}
+	
+	public Set<Cell> provideNeighbors() {
+		Cell[] neighboringCells = new Cell[] {
+				this.up(), this.down(), this.left(), this.right(),
+				this.up().left(), this.up().right(), this.down().left(), this.down().right()
+			};
+		
+		return new HashSet<>(Arrays.asList(neighboringCells));
+	}
+	
+	private Cell up() {
+		return new Cell(this.x, this.y + 1);
+	}
+	
+	private Cell down() {
+		return new Cell(this.x, this.y - 1);
+	}
+
+	private Cell left() {
+		return new Cell(this.x - 1, this.y);
+	}
+
+	private Cell right() {
+		return new Cell(this.x + 1, this.y);
 	}
 	
 	@Override

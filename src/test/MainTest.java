@@ -13,7 +13,7 @@ public class MainTest {
 	public static void main(String[] args) {
 
 		int dimension = 54;
-		Set<Cell> initialLiveCells = blockTest(dimension);
+		Set<Cell> initialLiveCells = randomTest(dimension);
 
 		Community c = new ConwaysCommunity(dimension, initialLiveCells);
 		GUIGrid grid = new GUIGrid(dimension, c);
@@ -36,7 +36,7 @@ public class MainTest {
 	private static Set<Cell> randomTest(int dimension) {
 		Set<Cell> cells = new HashSet<>();
 		Cell.rangeDo(new Cell(1, 1), new Cell(dimension, dimension), (Cell c) -> {
-			if(Math.round((1.62 * 3.14 * Math.random())) % 9 == 0)
+			if(Math.round((1.62 * 3.14 * Math.random())) % 2 == 0)
 				cells.add(c);
 		});
 		return cells;

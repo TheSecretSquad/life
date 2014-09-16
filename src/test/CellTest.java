@@ -1,57 +1,61 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import life.Cell;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CellTest {
 
+	private Cell cell1_1;
+	private Set<Cell> neighborsOf1_1;
+	
+	@Before
+	public void setUp() throws Exception {
+		this.cell1_1 = new Cell(1, 1);
+		this.neighborsOf1_1 = new HashSet<Cell>();
+		this.neighborsOf1_1.addAll(Arrays.asList(new Cell[] {
+				new Cell(1, 2),	new Cell(1, 0),	new Cell(0, 1),	new Cell(2, 1),
+				new Cell(0, 2),	new Cell(2, 2),	new Cell(0, 0), new Cell(2, 0)
+		}));
+	}
+	
+	private void assertNeighborsCorrect(Set<Cell> expected, Set<Cell> actual) {
+		assertTrue(expected.containsAll(actual));
+	}
+	
 	@Test
 	public void ShouldBeEqualWithSameCoordinates() {
-		assertTrue(new Cell(1, 1).equals(new Cell(1, 1)));
+		assertTrue(this.cell1_1.equals(new Cell(1, 1)));
 	}
 	
 	@Test
 	public void ShouldBeUnEqualWithDifferentCoordinates() {
-		assertFalse(new Cell(1, 1).equals(new Cell(2, 2)));
+		assertFalse(this.cell1_1.equals(new Cell(2, 2)));
 	}
 	
 	@Test
 	public void ShouldBeUnEqualWithDifferentXCoordinate() {
-		assertFalse(new Cell(1, 1).equals(new Cell(2, 1)));
+		assertFalse(this.cell1_1.equals(new Cell(2, 1)));
 	}
 	
 	@Test
 	public void ShouldBeUnEqualWithDifferentYCoordinate() {
-		assertFalse(new Cell(1, 1).equals(new Cell(1, 2)));
+		assertFalse(this.cell1_1.equals(new Cell(1, 2)));
 	}
 	
 	@Test
-	public void ShouldReturnCellX_YPlus1WhenUp() {
-		assertEquals(new Cell(1, 2), new Cell(1, 1).up());
-	}
-	
-	@Test
-	public void ShouldReturnCellX_YMinus1WhenDown() {
-		assertEquals(new Cell(1, 0), new Cell(1, 1).down());
-	}
-	
-	@Test
-	public void ShouldReturnCellXMinus1YWhenLeft() {
-		assertEquals(new Cell(0, 1), new Cell(1, 1).left());
-	}
-	
-	@Test
-	public void ShouldReturnCellXPlus1YWhenRight() {
-		assertEquals(new Cell(2, 1), new Cell(1, 1).right());
+	public void ShouldProvideItsNeighbors() {
+		this.assertNeighborsCorrect(this.cell1_1.provideNeighbors(), this.neighborsOf1_1);
 	}
 	
 	@Test
@@ -70,7 +74,7 @@ public class CellTest {
 		
 		Collection<Cell> results = new ArrayList<>();
 		Cell.rangeDo(new Cell(1, 1), new Cell(3, 3), (Cell c) -> results.add(c));
-		Assert.assertArrayEquals(expected, results.toArray(new Cell[expected.length]));
+		assertTrue(results.containsAll(Arrays.asList(expected)));
 	}
 	
 	@Test
