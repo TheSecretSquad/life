@@ -59,7 +59,7 @@ public class CellTest {
 	}
 	
 	@Test
-	public void RangeDoShouldForCell1_1ToCell3_3ShouldReturnAllCellsBetweenStartAndFinishInclusive() {
+	public void RangeDo_GivenCell1_1ToCell3_3ShouldReturnAllCellsBetweenStartAndFinishInclusive() {
 		Cell[] expected = new Cell[] {
 				new Cell(1, 1),
 				new Cell(1, 2),
@@ -78,7 +78,7 @@ public class CellTest {
 	}
 	
 	@Test
-	public void RangeDoShouldForCell1_1ToCell3_3ShouldNotContainCellsOutsideTheRange() {
+	public void RangeDo_GivenCell1_1ToCell3_3ShouldNotContainCellsOutsideTheRange() {
 		Collection<Cell> results = new ArrayList<>();
 		Cell.rangeDo(new Cell(1, 1), new Cell(3, 3), (Cell c) -> results.add(c));
 		assertFalse(results.contains(new Cell(0, 0)));
