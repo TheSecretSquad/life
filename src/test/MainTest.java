@@ -13,7 +13,7 @@ public class MainTest {
 	public static void main(String[] args) {
 
 		int dimension = 54;
-		Set<Cell> initialLiveCells = randomTest(dimension);
+		Set<Cell> initialLiveCells = blockTest(dimension);
 
 		Community c = new ConwaysCommunity(dimension, initialLiveCells);
 		GUIGrid grid = new GUIGrid(dimension, c);

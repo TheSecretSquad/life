@@ -41,33 +41,21 @@ public class ConwaysCommunity implements Community, Cells {
 	}
 
 	public ConwaysCommunity tick() {
-		Map<Cell, CellLifeStage> copyOfCurrentCells = new HashMap<>(this.cells);
-		this.buildNextGeneration(copyOfCurrentCells);
-		return new ConwaysCommunity(this.size, this.deadStage, this.initialLiveStage, copyOfCurrentCells);
+		Map<Cell, CellLifeStage> nextGeneration = new HashMap<>();
+		buildNextGenerationTo(nextGeneration);
+		return new ConwaysCommunity(this.size, this.deadStage, this.initialLiveStage, nextGeneration);
 	}
 
-	private void buildNextGeneration(final Map<Cell, CellLifeStage> copyOfCurrentCells) {
+	private void buildNextGenerationTo(Map<Cell, CellLifeStage> nextGeneration) {
 		Cell.rangeDo(new Cell(1, 1), new Cell(this.size, this.size), (Cell c) -> {
-				addNextGenerationOfCellTo(c, copyOfCurrentCells);
-			});
+			CellLifeStage cellNextLifeStage = nextLifeStageForCell(c);
+			if(!cellNextLifeStage.equals(this.deadStage))
+				nextGeneration.put(c, cellNextLifeStage);
+		});
 	}
 
-	private void addNextGenerationOfCellTo(final Cell cell, final Map<Cell, CellLifeStage> copyOfCurrentCells) {
-		CellLifeStage nextStage = nextStageAtCell(cell, copyOfCurrentCells);
-		
-		if(nextStage.equals(this.deadStage))
-			copyOfCurrentCells.remove(cell);
-		else
-			copyOfCurrentCells.put(cell, nextStage);
-	}
-
-	private CellLifeStage nextStageAtCell(final Cell cell, final Map<Cell, CellLifeStage> copyOfCurrentCells) {
-		CellLifeStage cls = copyOfCurrentCells.getOrDefault(cell, this.deadStage);
-		return this.nextStageAtCellFromStage(cell, cls);
-	}
-
-	private CellLifeStage nextStageAtCellFromStage(final Cell cell, final CellLifeStage cellStage) {
-		return cellStage.evaluate(cell, this);
+	private CellLifeStage nextLifeStageForCell(Cell cell) {
+		return this.cells.getOrDefault(cell, this.deadStage).evaluate(cell, this);
 	}
 	
 	@Override
