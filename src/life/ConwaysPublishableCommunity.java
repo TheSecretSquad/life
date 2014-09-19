@@ -1,24 +1,17 @@
 package life;
 
-import java.util.Map;
+import java.util.Set;
 
 public class ConwaysPublishableCommunity implements PublishableCommunity {
+
+	private final Set<Cell> livingCells;
 	
-	private final int size;
-	private final Map<Cell, CellLifeStage> cells;
-	
-	public ConwaysPublishableCommunity(final int size, final Map<Cell, CellLifeStage> cells) {
-		this.size = size;
-		this.cells = cells;
+	public ConwaysPublishableCommunity(Set<Cell> livingCells) {
+		this.livingCells = livingCells;
 	}
 	
 	@Override
 	public void publishTo(CommunityPublisher communityPublisher) {
-		Cell.rangeDo(new Cell(1, 1), new Cell(size, size), (Cell c) -> {
-				if(this.cells.containsKey(c))
-					communityPublisher.alive(c);
-				else
-					communityPublisher.dead(c);
-		});
+		communityPublisher.publishLiving(this.livingCells);
 	}
 }

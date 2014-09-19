@@ -1,8 +1,8 @@
 package life;
 
+import java.util.Set;
+
 public interface CommunityPublisher {
 
-	void alive(final Cell cell);
-	
-	void dead(final Cell cell);
+	void publishLiving(Set<Cell> livingCells);
 }

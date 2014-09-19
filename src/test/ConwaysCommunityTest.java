@@ -172,13 +172,13 @@ public class ConwaysCommunityTest {
 	}
 	
 	@Test
-	public void ShouldReturnNewPublishableCommunityForEachNewCommunity() {
-		assertSame(community.asPublishable(), community.asPublishable());
-		assertNotSame(community.asPublishable(), community.tick().asPublishable());
+	public void ShouldNotBeAliveForCellsOutsideOfTheCommunity() {
+		assertFalse(this.community.isAlive(new Cell(5, 5)));
 	}
 	
 	@Test
-	public void ShouldNotBeAliveForCellsOutsideOfTheCommunity() {
-		assertFalse(this.community.isAlive(new Cell(5, 5)));
+	public void ShouldReturnNewPublishableCommunityForEachNewCommunity() {
+		assertSame(community.asPublishable(), community.asPublishable());
+		assertNotSame(community.asPublishable(), community.tick().asPublishable());
 	}
 }

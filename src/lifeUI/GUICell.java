@@ -2,57 +2,21 @@ package lifeUI;
 
 import javafx.scene.layout.Pane;
 
+public class GUICell {
 
-public class GUICell implements CellStateListener {
-
-	private CellViewModel cellViewModel;
-	private Pane pane;
+	private Pane cellPane;
+	private String deadStyle = "-fx-background-color: black; " + Grid.borderStyle;
+	private String aliveStyle = "-fx-background-color: white; " + Grid.borderStyle;
 	
-	public GUICell(CellViewModel cellViewModel, Pane pane) {
-		this.cellViewModel = cellViewModel;
-		this.pane = pane;
-	}
-	
-	@Override
-	public void update() {
-		this.showColorFor(this.cellViewModel.cellState());
+	public GUICell(Pane cellPane) {
+		this.cellPane = cellPane;
 	}
 	
-	private void showColorFor(CellViewModelState cellViewModelState) {
-		switch(cellViewModelState) {
-		case BORN:
-			this.showBornColor();
-		case ALIVE:
-			this.showAliveColor();
-		case SURVIVING:
-			this.showSurvivingColor();
-		case KILLED:
-			this.showKilledColor();
-		default:
-			this.showDeadColor();
-		}
+	public void showAlive() {
+		this.cellPane.setStyle(aliveStyle);
 	}
-
-	private void showDeadColor() {
-		this.pane.setStyle("-fx-background-color: black;");
-	}
-
-	private void showKilledColor() {
-		// TODO Auto-generated method stub
-	}
-
-	private void showSurvivingColor() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void showAliveColor() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void showBornColor() {
-		// TODO Auto-generated method stub
-		
+	
+	public void showDead() {
+		this.cellPane.setStyle(deadStyle);
 	}
 }

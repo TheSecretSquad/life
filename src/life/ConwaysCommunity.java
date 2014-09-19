@@ -1,6 +1,7 @@
 package life;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +16,6 @@ public class ConwaysCommunity implements Community, Cells {
 	private final CellLifeStage deadStage;
 	private final Map<Cell, CellLifeStage> cells;
 	private final int size;
-	private PublishableCommunity publishableCommunity = null;
 
 	public ConwaysCommunity(final int size, Set<Cell> initialCells) {
 		this(size, ConwaysDefaultLifeStage.DEAD, ConwaysDefaultLifeStage.ALIVE, initialCells);
@@ -49,9 +49,13 @@ public class ConwaysCommunity implements Community, Cells {
 	private void buildNextGenerationTo(Map<Cell, CellLifeStage> nextGeneration) {
 		Cell.rangeDo(new Cell(1, 1), new Cell(this.size, this.size), (Cell c) -> {
 			CellLifeStage cellNextLifeStage = nextLifeStageForCell(c);
-			if(!cellNextLifeStage.equals(this.deadStage))
+			if(isLiving(cellNextLifeStage))
 				nextGeneration.put(c, cellNextLifeStage);
 		});
+	}
+
+	private boolean isLiving(CellLifeStage cellNextLifeStage) {
+		return !cellNextLifeStage.equals(this.deadStage);
 	}
 
 	private CellLifeStage nextLifeStageForCell(Cell cell) {
@@ -63,12 +67,10 @@ public class ConwaysCommunity implements Community, Cells {
 		return this.cells.containsKey(cell);
 	}
 	
+
 	@Override
-	public PublishableCommunity asPublishable() {
-		if(this.publishableCommunity == null)
-			return this.publishableCommunity = new ConwaysPublishableCommunity(this.size, this.cells);
-		
-		return this.publishableCommunity;
+	public ConwaysPublishableCommunity asPublishable() {
+		return new ConwaysPublishableCommunity(new HashSet<Cell>(this.cells.keySet()));
 	}
 
 	@Override
