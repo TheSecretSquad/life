@@ -12,7 +12,7 @@ import life.EvolutionControllerListener;
 
 public class EvolutionTimer implements EvolutionController {
 
-	private Set<EvolutionControllerListener> listeners = new HashSet<>();
+	private final Set<EvolutionControllerListener> listeners = new HashSet<>();
 	private Timeline timeline;
 
 	@Override
@@ -37,5 +37,6 @@ public class EvolutionTimer implements EvolutionController {
 			return;
 		
 		this.timeline.stop();
+		this.timeline = null;
 	}
 }

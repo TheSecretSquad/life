@@ -2,7 +2,7 @@ package life;
 
 public interface EvolutionController {
 
-	void addEvolveListener(EvolutionControllerListener timerListener);
+	void addEvolveListener(final EvolutionControllerListener timerListener);
 
 	void begin();
 

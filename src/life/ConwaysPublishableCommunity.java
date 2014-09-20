@@ -6,12 +6,12 @@ public class ConwaysPublishableCommunity implements PublishableCommunity {
 
 	private final Set<Cell> livingCells;
 	
-	public ConwaysPublishableCommunity(Set<Cell> livingCells) {
+	public ConwaysPublishableCommunity(final Set<Cell> livingCells) {
 		this.livingCells = livingCells;
 	}
 	
 	@Override
-	public void publishTo(CommunityPublisher communityPublisher) {
+	public void publishTo(final CommunityPublisher communityPublisher) {
 		communityPublisher.publishLiving(this.livingCells);
 	}
 }

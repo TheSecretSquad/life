@@ -67,7 +67,6 @@ public class ConwaysCommunity implements Community, Cells {
 		return this.cells.containsKey(cell);
 	}
 	
-
 	@Override
 	public ConwaysPublishableCommunity asPublishable() {
 		return new ConwaysPublishableCommunity(new HashSet<Cell>(this.cells.keySet()));

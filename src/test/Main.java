@@ -11,7 +11,8 @@ import life.Cell;
 import life.ConwaysCommunity;
 import life.Game;
 import lifeUI.EvolutionTimer;
-import lifeUI.Grid;
+import lifeUI.GridView;
+import lifeUI.GridViewModel;
 
 public class Main extends Application {
 	
@@ -21,9 +22,12 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		int dimension = 100;
 		GridPane gridPane = new GridPane();
-		Grid grid = new Grid(gridPane, 140);
-		Game g = new Game(new ConwaysCommunity(140, randomTest(140)), grid, 10000, new EvolutionTimer());
+		GridViewModel gridViewModel = new GridViewModel(dimension);
+		GridView grid = new GridView(gridPane, dimension, gridViewModel);
+		gridViewModel.addView(grid);
+		Game g = new Game(new ConwaysCommunity(dimension, randomTest(dimension)), gridViewModel, 10000, new EvolutionTimer());
 		Scene scene = new Scene(gridPane, 600, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
