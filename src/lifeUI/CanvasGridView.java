@@ -14,7 +14,7 @@ public class CanvasGridView implements GridModelListener {
 	private static final Color survivedColor = Color.rgb(227, 217, 78);
 	private static final Color killedColor = Color.rgb(227, 128, 78);
 	private static final Color deadColor = Color.valueOf("black");
-	private static final int gapSizeBetweenCells = 1;
+	private static final int gapSizeBetweenCells = 2;
 	
 	private int dimension;
 	private GridViewModel gridViewModel;
