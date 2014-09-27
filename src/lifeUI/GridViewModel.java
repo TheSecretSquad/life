@@ -11,22 +11,22 @@ import life.CommunityPublisher;
 public class GridViewModel implements CommunityPublisher {
 	
 	private final Map<Cell, CellDisplayState> lastCells;
-	private final Set<GridView> gridViews;
+	private final Set<GridModelListener> gridModelListeners;
 	private final int dimension;
 	
 	public GridViewModel(final int size) {
 		this.dimension = size;
 		this.lastCells = new HashMap<>();
-		this.gridViews = new HashSet<>();
+		this.gridModelListeners = new HashSet<>();
 	}
 
 	@Override
 	public void publishLiving(final Set<Cell> livingCells) {
 		this.evaluateNextDisplayStates(livingCells);
-		this.updateViews();
+		this.updateListeners();
 	}
 
-	private void evaluateNextDisplayStates(final Set<Cell> livingCells) {
+	private void evaluateNextDisplayStates(final Set<Cell> livingCells) {		
 		Cell.rangeDo(new Cell(1, 1), new Cell(dimension, dimension), (Cell c) -> {
 			CellDisplayState currentDisplayState = this.lastCells.getOrDefault(c, CellDisplayState.DEAD);
 			
@@ -41,13 +41,13 @@ public class GridViewModel implements CommunityPublisher {
 		return this.lastCells.getOrDefault(new Cell(x + 1, y + 1), CellDisplayState.DEAD);
 	}
 	
-	public void addView(final GridView gridView) {
-		this.gridViews.add(gridView);
+	public void addListener(final GridModelListener gridModelListener) {
+		this.gridModelListeners.add(gridModelListener);
 	}
 	
-	private void updateViews() {
-		this.gridViews.forEach((GridView gv) -> {
-			gv.update();
+	private void updateListeners() {
+		this.gridModelListeners.forEach((GridModelListener gml) -> {
+			gml.update();
 		});
 	}
 }

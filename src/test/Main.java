@@ -5,13 +5,14 @@ import java.util.Set;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import life.Cell;
 import life.ConwaysCommunity;
 import life.Game;
+import lifeUI.CanvasGridView;
 import lifeUI.EvolutionTimer;
-import lifeUI.GridView;
 import lifeUI.GridViewModel;
 
 public class Main extends Application {
@@ -22,14 +23,22 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		int dimension = 100;
-		GridPane gridPane = new GridPane();
-		GridViewModel gridViewModel = new GridViewModel(dimension);
-		GridView grid = new GridView(gridPane, dimension, gridViewModel);
-		gridViewModel.addView(grid);
-		Game g = new Game(new ConwaysCommunity(dimension, randomTest(dimension)), gridViewModel, 10000, new EvolutionTimer());
-		Scene scene = new Scene(gridPane, 600, 600);
+		Pane root = new Pane();
+		Scene scene = new Scene(root, 600, 600);
+		Canvas cellLayer = new Canvas();
+		cellLayer.widthProperty().bind(scene.widthProperty());
+		cellLayer.heightProperty().bind(scene.heightProperty());
+		root.setStyle("-fx-background-color: gray;");
+		root.getChildren().add(cellLayer);
+		
 		primaryStage.setScene(scene);
+		
+		int dimension = 80;
+		GridViewModel gridViewModel = new GridViewModel(dimension);
+		CanvasGridView gridView = new CanvasGridView(dimension, gridViewModel, cellLayer);
+		gridViewModel.addListener(gridView);
+		Game g = new Game(new ConwaysCommunity(dimension, randomTest(dimension)), gridViewModel, 1000, new EvolutionTimer());
+
 		primaryStage.show();
 		g.start();
 	}

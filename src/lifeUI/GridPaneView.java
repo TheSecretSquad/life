@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
-public class GridView {
+public class GridPaneView implements GridModelListener{
 
 	private static final String borderStyle = "-fx-border-width: 0.5; -fx-border-color: gray;";
 	private static final String bornStyle = "-fx-background-color: rgb(155, 227, 78); " + borderStyle;
@@ -21,7 +21,7 @@ public class GridView {
 	private final Pane[][] panes;
 	private GridViewModel gridViewModel;
 	
-	public GridView(final GridPane gridPane, int dimension, GridViewModel gridViewModel) {
+	public GridPaneView(final GridPane gridPane, int dimension, GridViewModel gridViewModel) {
 		this.gridPane = gridPane;
 		this.dimension = dimension;
 		this.panes = new Pane[dimension][dimension];
@@ -70,6 +70,7 @@ public class GridView {
         this.columnConstraints.setHgrow(Priority.ALWAYS);
 	}
 	
+	@Override
 	public void update() {
 		for(int col = 0; col < dimension; col++) {
 			for(int row = 0; row < dimension; row++) {
