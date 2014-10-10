@@ -10,7 +10,7 @@ import javafx.util.Duration;
 import life.EvolutionController;
 import life.EvolutionControllerListener;
 
-public class EvolutionTimer implements EvolutionController {
+public class EvolutionTimer implements EvolutionController, UpdateCompleteListener {
 
 	private final Set<EvolutionControllerListener> listeners = new HashSet<>();
 	private Timeline timeline;
@@ -22,13 +22,7 @@ public class EvolutionTimer implements EvolutionController {
 
 	@Override
 	public void begin() {
-		this.timeline = new Timeline(new KeyFrame(Duration.millis(100), (ae) -> {
-		        	this.listeners.forEach((ecl) -> {
-		        		ecl.evolve();
-		        	});
-		        }));
-		this.timeline.setCycleCount(Animation.INDEFINITE);
-		this.timeline.play();
+		this.updateComplete();
 	}
 
 	@Override
@@ -38,5 +32,17 @@ public class EvolutionTimer implements EvolutionController {
 		
 		this.timeline.stop();
 		this.timeline = null;
+	}
+
+	@Override
+	public void updateComplete() {
+		this.timeline = new Timeline(new KeyFrame(Duration.millis(10), (ae) -> {
+        	this.listeners.forEach((ecl) -> {
+        		ecl.evolve();
+        	});
+        }));
+		this.timeline.setCycleCount(1);
+		this.timeline.play();
+    	System.out.println("update");
 	}
 }

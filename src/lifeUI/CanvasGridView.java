@@ -1,5 +1,7 @@
 package lifeUI;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import javafx.scene.canvas.Canvas;
@@ -19,6 +21,7 @@ public class CanvasGridView implements GridModelListener {
 	private int dimension;
 	private GridViewModel gridViewModel;
 	private Canvas cellCanvas;
+	private Set<UpdateCompleteListener> updateCompleteListeners;
 	
 	private static double startPoint(int unitNumber, double unitDimensionValue) {
 		return unitNumber * unitDimensionValue;
@@ -28,14 +31,24 @@ public class CanvasGridView implements GridModelListener {
 		this.dimension = dimension;
 		this.gridViewModel = gridViewModel;
 		this.cellCanvas = cellCanvas;
+		this.updateCompleteListeners = new HashSet<>();
 	}
 
 	@Override
 	public void update() {
 		this.beforeDrawCells();
 		drawCells();
+		this.updateComplete();
 	}
 
+	private void updateComplete() {
+		this.updateCompleteListeners.forEach(UpdateCompleteListener::updateComplete);
+	}
+
+	public void addUpdateCompleteListener(UpdateCompleteListener updateCompleteListener) {
+		this.updateCompleteListeners.add(updateCompleteListener);
+	}
+	
 	private void drawCells() {
 		GraphicsContext gc = this.cellCanvas.getGraphicsContext2D();
 		IntStream.rangeClosed(0, dimension).forEach((int column) -> {
