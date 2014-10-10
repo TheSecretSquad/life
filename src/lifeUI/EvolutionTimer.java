@@ -3,7 +3,6 @@ package lifeUI;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -22,6 +21,10 @@ public class EvolutionTimer implements EvolutionController, UpdateCompleteListen
 
 	@Override
 	public void begin() {
+		this.timeline = new Timeline(new KeyFrame(Duration.millis(100), (ae) -> {
+        	this.listeners.forEach(EvolutionControllerListener::evolve);
+        }));
+		this.timeline.setCycleCount(1);
 		this.updateComplete();
 	}
 
@@ -36,13 +39,9 @@ public class EvolutionTimer implements EvolutionController, UpdateCompleteListen
 
 	@Override
 	public void updateComplete() {
-		this.timeline = new Timeline(new KeyFrame(Duration.millis(10), (ae) -> {
-        	this.listeners.forEach((ecl) -> {
-        		ecl.evolve();
-        	});
-        }));
-		this.timeline.setCycleCount(1);
-		this.timeline.play();
-    	System.out.println("update");
+		if(this.timeline != null) {
+			this.timeline.play();
+			this.timeline.jumpTo(Duration.ZERO);
+		}
 	}
 }

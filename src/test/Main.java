@@ -33,13 +33,13 @@ public class Main extends Application {
 		
 		primaryStage.setScene(scene);
 		
-		int dimension = 300;
+		int dimension = 100;
 		GridViewModel gridViewModel = new GridViewModel(dimension);
 		CanvasGridView gridView = new CanvasGridView(dimension, gridViewModel, cellLayer);
 		gridViewModel.addListener(gridView);
 		EvolutionTimer et = new EvolutionTimer();
 		gridView.addUpdateCompleteListener(et);
-		Game g = new Game(new ConwaysCommunity(dimension, randomTest(dimension)), gridViewModel, 1000, et);
+		Game g = new Game(new ConwaysCommunity(dimension, randomTest(dimension)), gridViewModel, 10000, et);
 
 		primaryStage.show();
 		g.start();
